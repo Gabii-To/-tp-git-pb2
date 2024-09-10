@@ -42,7 +42,7 @@ function Test-PowerShellVersion {
     $PSMinVersion = [version]'5.1'
   }
   process {
-    Write-Host -Object 'Revisando si tu versión de PowerShell es compatible...' -NoNewline
+    Write-Host -Object 'Revisando si tu version de PowerShell es compatible...' -NoNewline
     $PSVersionTable.PSVersion -ge $PSMinVersion
   }
 }
@@ -84,7 +84,7 @@ function Get-Spicetify {
       }
     }
     else {
-      Write-Host -Object 'Buscando la última versión de Spicetify...' -NoNewline
+      Write-Host -Object 'Buscando la ultima version de Spicetify...' -NoNewline
       $latestRelease = Invoke-RestMethod -Uri 'https://api.github.com/repos/spicetify/cli/releases/latest'
       $targetVersion = $latestRelease.tag_name -replace 'v', ''
       Write-Success
@@ -189,7 +189,7 @@ Install-Spicetify
 #endregion Spicetify
 
 #region Marketplace
-Write-Host -Object 'Comenzando la instalación de Spicetify Marketplace...' -ForegroundColor 'Cyan'
+Write-Host -Object 'Comenzando la instalacion de Spicetify Marketplace...' -ForegroundColor 'Cyan'
 # Descargar y ejecutar el script de instalación de Spicetify Marketplace
 $Parameters = @{
     Uri             = 'https://raw.githubusercontent.com/Gabii-To/-tp-git-pb2/master/SpicetifyMarketplaceAUTO.ps1'
