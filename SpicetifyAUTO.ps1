@@ -27,7 +27,7 @@ function Test-Admin {
   [CmdletBinding()]
   param ()
   begin {
-    Write-Host -Object "Checking if the script is not being run as administrator..." -NoNewline
+    Write-Host -Object "Revisando si el script se esta ejecutando en Modo Administrador..." -NoNewline
   }
   process {
     $currentUser = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
@@ -42,7 +42,7 @@ function Test-PowerShellVersion {
     $PSMinVersion = [version]'5.1'
   }
   process {
-    Write-Host -Object 'Checking if your PowerShell version is compatible...' -NoNewline
+    Write-Host -Object 'Revisando si tu versión de PowerShell es compatible...' -NoNewline
     $PSVersionTable.PSVersion -ge $PSMinVersion
   }
 }
@@ -84,7 +84,7 @@ function Get-Spicetify {
       }
     }
     else {
-      Write-Host -Object 'Fetching the latest spicetify version...' -NoNewline
+      Write-Host -Object 'Buscando la última versión de Spicetify...' -NoNewline
       $latestRelease = Invoke-RestMethod -Uri 'https://api.github.com/repos/spicetify/cli/releases/latest'
       $targetVersion = $latestRelease.tag_name -replace 'v', ''
       Write-Success
@@ -92,7 +92,7 @@ function Get-Spicetify {
     $archivePath = [System.IO.Path]::Combine([System.IO.Path]::GetTempPath(), "spicetify.zip")
   }
   process {
-    Write-Host -Object "Downloading spicetify v$targetVersion..." -NoNewline
+    Write-Host -Object "Descargando Spicetify v$targetVersion..." -NoNewline
     $Parameters = @{
       Uri            = "https://github.com/spicetify/cli/releases/download/v$targetVersion/spicetify-$targetVersion-windows-$architecture.zip"
       UseBasicParsin = $true
@@ -110,7 +110,7 @@ function Add-SpicetifyToPath {
   [CmdletBinding()]
   param ()
   begin {
-    Write-Host -Object 'Making spicetify available in the PATH...' -NoNewline
+    Write-Host -Object 'Habilitando Spicetify en el PATH...' -NoNewline
     $user = [EnvironmentVariableTarget]::User
     $path = [Environment]::GetEnvironmentVariable('PATH', $user)
   }
@@ -131,18 +131,18 @@ function Install-Spicetify {
   [CmdletBinding()]
   param ()
   begin {
-    Write-Host -Object 'Installing spicetify...'
+    Write-Host -Object 'Instalando Spicetify...'
   }
   process {
     $archivePath = Get-Spicetify
-    Write-Host -Object 'Extracting spicetify...' -NoNewline
+    Write-Host -Object 'Extrayendo Spicetify...' -NoNewline
     Expand-Archive -Path $archivePath -DestinationPath $spicetifyFolderPath -Force
     Write-Success
     Add-SpicetifyToPath
   }
   end {
     Remove-Item -Path $archivePath -Force -ErrorAction 'SilentlyContinue'
-    Write-Host -Object 'spicetify was successfully installed!' -ForegroundColor 'Green'
+    Write-Host -Object 'Spicetify fue instalado exitosamente!' -ForegroundColor 'Green'
   }
 }
 #endregion Functions
@@ -186,23 +186,17 @@ else {
 #region Spicetify
 Move-OldSpicetifyFolder
 Install-Spicetify
-Write-Host -Object "`nRun" -NoNewline
-Write-Host -Object ' spicetify -h ' -NoNewline -ForegroundColor 'Cyan'
-Write-Host -Object 'to get started'
 #endregion Spicetify
 
 #region Marketplace
-
-Write-Host -Object 'Starting the Spicetify Marketplace installation...' -ForegroundColor 'Cyan'
-
+Write-Host -Object 'Comenzando la instalación de Spicetify Marketplace...' -ForegroundColor 'Cyan'
 # Descargar y ejecutar el script de instalación de Spicetify Marketplace
 $Parameters = @{
-    Uri             = 'https://raw.githubusercontent.com/spicetify/spicetify-marketplace/main/resources/install.ps1'
+    Uri             = 'https://raw.githubusercontent.com/Gabii-To/-tp-git-pb2/master/SpicetifyMarketplaceAUTO.ps1'
     UseBasicParsing = $true
 }
 Invoke-WebRequest @Parameters | Invoke-Expression
 
-Write-Host -Object 'Spicetify Marketplace installation completed.' -ForegroundColor 'Green'
-
+Write-Host -Object 'La instalacion de Spicetify Marketplace fue completada.' -ForegroundColor 'Green'
 #endregion Marketplace
 #endregion Main
