@@ -192,17 +192,22 @@ Write-Host -Object 'to get started'
 #endregion Spicetify
 
 #region Marketplace
-
-Write-Host -Object 'Starting the Spicetify Marketplace installation script...' -ForegroundColor 'Cyan'
-
-# Descargar y ejecutar el script de instalación de Spicetify Marketplace
-$Parameters = @{
+$Host.UI.RawUI.Flushinputbuffer()
+$choices = [System.Management.Automation.Host.ChoiceDescription[]] @(
+    (New-Object System.Management.Automation.Host.ChoiceDescription "&Yes", "Install Spicetify Marketplace."),
+    (New-Object System.Management.Automation.Host.ChoiceDescription "&No", "Do not install Spicetify Marketplace.")
+)
+$choice = $Host.UI.PromptForChoice('', "`nDo you also want to install Spicetify Marketplace? It will become available within the Spotify client, where you can easily install themes and extensions.", $choices, 0)
+if ($choice -eq 1) {
+  Write-Host -Object 'spicetify Marketplace installation aborted' -ForegroundColor 'Yellow'
+}
+else {
+  Write-Host -Object 'Starting the spicetify Marketplace installation script..'
+  $Parameters = @{
     Uri             = 'https://raw.githubusercontent.com/spicetify/spicetify-marketplace/main/resources/install.ps1'
     UseBasicParsing = $true
+  }
+  Invoke-WebRequest @Parameters | Invoke-Expression
 }
-Invoke-WebRequest @Parameters | Invoke-Expression
-
-Write-Host -Object 'Spicetify Marketplace installation completed.' -ForegroundColor 'Green'
-
-#endregion
+#endregion Marketplace
 #endregion Main
