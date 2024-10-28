@@ -66,9 +66,12 @@ Invoke-WebRequest @Parameters
 
 # Aplicar los cambios
 Write-Host -Object 'Applying...' -ForegroundColor 'Cyan'
-# No pedir confirmación; reemplazar el tema directamente
-if ($setTheme) {
+
+# Verificar si hay un tema instalado y si el tema actual no es 'marketplace'
+if ($isThemeInstalled -and ($currentTheme -ne 'marketplace')) {
+  # Configurar directamente el tema de Marketplace sin preguntar
   spicetify config current_theme marketplace
+}
 }
 spicetify backup
 spicetify apply
