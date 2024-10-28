@@ -72,7 +72,7 @@ if ($isThemeInstalled -and ($currentTheme -ne 'marketplace')) {
   # Configurar directamente el tema de Marketplace sin preguntar
   spicetify config current_theme marketplace
 }
-}
+
 spicetify backup
 spicetify apply
 
